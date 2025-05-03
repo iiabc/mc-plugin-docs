@@ -1,0 +1,13 @@
+{
+    "title": "ViaVersion",
+    "root": true,
+    "pages": [
+        "index",
+        "install",
+        "command",
+        "configuration",
+        "compatibility",
+        "faq",
+        "api"
+    ]
+}

@@ -1,0 +1,21 @@
+---
+title: 命令列表
+description: 管理命令详解
+---
+
+| 命令                    | 描述                                                                 | 权限节点               |
+|---------------------------|------------------------------------------------------------------------|-----------------------|
+| `/viaversion`             | 显示插件版本及基础信息                                                  | viaversion.admin      |
+| `/viaversion autoteam`    | 开关自动队伍功能（解决1.8版本名称冲突）                                  | viaversion.command.autoteam |
+| `/viaversion debug`       | 启用调试模式（需专业人员操作）                                           | viaversion.command.debug |
+| `/viaversion displayleaks`| 启用 Netty 资源泄漏检测（开发调试用）                                     | viaversion.command.displayleaks |
+| `/viaversion dontbugme`   | 关闭更新提示通知                                                        | viaversion.command.dontbugme |
+| `/viaversion dump`        | 生成诊断报告链接（需开放 dump.viaversion.com:443 端口）                  | viaversion.command.dump |
+| `/viaversion list`        | 显示在线玩家及其客户端版本                                               | viaversion.command.list |
+| `/viaversion pps`         | 显示玩家每秒数据包收发量                                                 | viaversion.command.pps |
+| `/viaversion reload`      | 重载配置文件（部分配置需重启生效）                                        | viaversion.command.reload |
+| `/viaversion probe`       | 探测子服版本（仅限 BungeeCord 环境）                                      | viaversion.command.probe |
+
+<Callout title="提示">
+权限系统支持细粒度控制，可使用 `viaversion.command.<子命令>` 格式分配权限
+</Callout>

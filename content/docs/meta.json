@@ -1,0 +1,11 @@
+{
+    "root": true,
+    "pages": [
+        "index",
+        "---免费---",
+        "plugins/free/viaversion",
+        "---付费---",
+        "---贡献---",
+        "contribution"
+    ]
+}

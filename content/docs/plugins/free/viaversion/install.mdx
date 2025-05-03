@@ -1,0 +1,32 @@
+---
+title: 安装
+description: 安装与部署指南
+---
+
+<Callout type="warn" title="重要提示">
+  若使用代理架构（如 BungeeCord/Velocity），ViaVersion 只需安装在代理层或子服中的任意一侧，切勿重复安装
+</Callout>
+
+## 前置要求
+
+- **服务端类型**  
+  Paper / Spigot / Velocity（部分魔改分支可能不兼容）
+- **Java 版本**  
+  Java 17 或更高版本（[版本要求详情](https://github.com/ViaVersion/ViaVersion/wiki/Java-Requirements)）
+- **代理层要求**  
+  若使用 BungeeCord/Velocity 需更新至最新稳定版
+
+## 下载安装
+
+### 正式版获取
+1. 访问 [GitHub Releases](https://github.com/ViaVersion/ViaVersion/releases)
+2. 下载最新版 `ViaVersion.jar`
+3. 将文件放入服务器的 `plugins` 目录
+
+### 开发版获取
+- 构建服务器地址：https://ci.viaversion.com/job/ViaVersion/
+
+## 部署验证
+1. 重启服务器完成加载
+2. 检查启动日志确认无报错
+3. 执行 `/viaversion list` 验证插件状态

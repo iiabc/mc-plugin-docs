@@ -1,0 +1,97 @@
+---
+title: API
+description: 开发者接口使用手册
+---
+
+## 环境集成
+
+### Maven 依赖配置
+```xml
+<!-- 仓库声明 -->
+<repository>
+    <id>viaversion-repo</id>
+    <url>https://repo.viaversion.com</url>
+</repository>
+
+<!-- API 依赖 -->
+<dependency>
+    <groupId>com.viaversion</groupId>
+    <artifactId>viaversion-api</artifactId>
+    <version>4.9.3</version> <!-- 使用最新版本号替换 -->
+    <scope>provided</scope>
+</dependency>
+```
+
+## 核心功能接口
+
+### 获取客户端协议版本
+```java
+// 获取 API 实例
+ViaAPI api = Via.getAPI();
+
+// 获取玩家协议版本号
+int protocolVersion = api.getPlayerVersion(player.getUniqueId());
+
+// 示例：判断是否为1.12.2客户端（协议号340）
+if (protocolVersion >= 340) {
+    // 1.12+ 专属逻辑
+}
+```
+
+<Callout type="warning">
+  重要：在 PlayerJoinEvent 中获取协议版本时，建议延迟3-5 tick以确保数据同步完成
+</Callout>
+
+## 多版本兼容开发
+
+### 旧版 BossBar 兼容方案
+当需要为不同版本客户端动态生成 Boss 血条时：
+
+```java
+// 创建跨版本BossBar对象
+BossBar bossBar = api.legacyAPI().createBossBar(
+    "&6动态血条示例",  // 支持颜色代码
+    0.5F,           // 血量比例（0.0~1.0）
+    BossColor.PINK, // 颜色枚举
+    BossStyle.SEGMENTED_10 // 样式枚举
+);
+
+// 向玩家显示
+bossBar.addPlayer(playerUUID); 
+
+// 动态更新属性
+bossBar.setTitle("&c危险状态！");
+bossBar.setHealth(0.2F);
+```
+
+| 参数类型      | 可选值示例                | 版本影响               |
+|--------------|-------------------------|-----------------------|
+| BossColor    | RED, GREEN, BLUE, PURPLE | 1.9+ 客户端可见颜色变化 |
+| BossStyle    | SOLID, SEGMENTED_6/10/12 | 仅影响1.9+客户端显示    |
+
+## 最佳实践建议
+
+1. **版本检测策略**  
+   ```java
+   // 判断是否高于指定版本
+   public boolean isVersionNewerThan(UUID playerId, int protocol) {
+       return Via.getAPI().getPlayerVersion(playerId) >= protocol;
+   }
+   ```
+
+2. **资源文件隔离**  
+   为不同版本客户端提供差异化的：
+   - 材质包路径
+   - 语言文件
+   - 音效资源
+
+3. **数据包兼容处理**  
+   使用 `@ProtocolSupport` 注解实现版本分流：
+   ```java
+   @ProtocolSupport(versionRange = {VersionRange.above(340)})
+   public void sendNewFeaturePacket(Player player) {
+       // 1.12+ 专属数据包
+   }
+   ```
+
+[完整 Javadoc 参考](https://jd.viaversion.com)

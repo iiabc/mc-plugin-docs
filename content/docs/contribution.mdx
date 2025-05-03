@@ -1,0 +1,89 @@
+---
+title: "文档贡献"
+description: "规范手册"
+---
+
+## 🛠️ 开发环境配置
+
+1. **代码库克隆**  
+   ```bash
+   git clone https://github.com/iiabc/mc-plugin-docs.git
+   cd mc-plugin-docs
+   ```
+
+2. **依赖安装**  
+   ```bash
+   pnpm install
+   ```
+
+3. **实时预览**  
+   ```bash
+   pnpm dev
+   ```
+
+## ✍️ 内容编写标准
+
+### 标题层级规范
+```markdown
+# H1 标题（仅用于文档标题）
+
+## H2 章节标题
+
+### H3 子章节标题
+
+#### H4 扩展说明（慎用）
+```
+
+### 列表格式示例
+```markdown
+- **有序列表**  
+  1. 第一步操作
+  2. 第二步验证
+
+- **无序列表**  
+  - 必选参数：`-host`
+  - 可选参数：`-port`
+```
+
+## 🔄 Git 协作流程
+
+### Commit 消息模板
+
+```bash
+git commit -m "docs(插件名): 类型描述"
+# 示例: 
+# "docs(viaversion): 新增4.9.3协议转换流程图"
+# "fix(worldguard): 修正7.0.5权限节点表"
+```
+
+## ✅ PR 审核清单
+
+```markdown
+- [ ] 已通过本地 Markdown 语法检查
+- [ ] 插件经过本地验证
+- [ ] 无外链指向非白名单域名
+```
+
+## 🗂️ 配套模板文件
+
+```markdown
+---
+title: 插件原名
+description: 概括性描述
+---
+
+## 安装指南
+
+```yaml
+# 配置示例
+database:
+host: localhost
+port: 3306
+
+## 命令列表
+
+| 命令               | 权限节点            | 描述           |
+|--------------------|---------------------|----------------|
+| `/plugin reload`   | plugin.admin.reload | 重载插件配置    |
+
+```

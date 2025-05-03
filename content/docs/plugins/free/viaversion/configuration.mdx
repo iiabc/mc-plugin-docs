@@ -1,0 +1,89 @@
+---
+title: 配置详解
+description: 配置文件解析
+---
+
+## YAML 语法基础
+配置文件位于 `plugins/ViaVersion/config.yml`，采用 [YAML 语法规范](https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html)。关键数据类型说明：
+
+| 数据类型       | 描述                             | 示例                  |
+|----------------|----------------------------------|-----------------------|
+| 布尔值 (Boolean) | `true` 表示启用，`false` 表示禁用 | `check-for-updates: true` |
+| 字符串 (String)  | 使用双引号包裹的文本             | `message: "Hello"`    |
+| 整数 (Integer)   | 纯数字值                         | `limit: 10`           |
+| 整数列表        | 用方括号包裹的数字集合           | `[10, 20]`            |
+| 键值映射        | 键值对集合                       | `{key1: 1, key2: 2}`  |
+
+## 全局配置项
+影响所有版本的核心参数
+
+```yaml
+# 更新检查
+check-for-updates: true  # 是否自动检查更新（需开放 update.viaversion.com）
+
+# 版本屏蔽
+block-protocols: []      # 协议号黑名单（如屏蔽1.10填210）
+block-versions: []       # 版本号表达式黑名单（如 ["<1.17"]）
+block-disconnect-msg: "&c不支持的客户端版本！"  # 屏蔽提示信息
+
+# 高级设置
+suppress-conversion-warnings: false  # 是否隐藏转换错误日志
+```
+
+## 数据包限制策略
+```yaml
+packet-limiter:
+  max-pps: 800           # 每秒最大包量（-1禁用） 
+  tracking-period: 6     # 监控周期（秒）
+  tracking-warning-pps: 120  # 触发警告的包量阈值
+  tracking-max-warnings: 4    # 周期内最大警告次数
+
+  # 踢出提示（支持%pps占位符）
+  max-pps-kick-msg: "&c数据包发送速率过高！当前: %pps pps"
+```
+
+## 代理层专属配置
+_BungeeCord/Velocity 环境专用_
+
+```yaml
+bungee-ping-interval: 60   # 子服协议探测间隔（秒，-1禁用）
+bungee-ping-save: true     # 是否自动更新协议版本缓存
+
+bungee-servers:            # 手动指定子服协议版本
+  lobby: 47                # 子服名称: 协议号
+  survival: 758
+```
+
+## 多版本兼容设置
+```yaml
+# 1.9+ 兼容优化
+hologram-patch: false      # 全息显示高度修正（1.9/1.11适配）
+piston-animation-patch: false  # 禁用1.11活塞动画防崩溃
+
+# 1.13+ 区块连接
+serverside-blockconnections: false  # 服务端区块连接计算
+block-connection-method: packet     # 连接检测模式（packet/world）
+
+# 1.17 资源包强制
+forced-use-1_17-resource-pack: false
+resource-pack-1_17-prompt: "请接受资源包以继续游戏"
+```
+
+## 1.8 服务端特殊配置
+_仅当服务端为1.8时生效_
+
+```yaml
+# 战斗机制兼容
+shield-blocking: true      # 盾牌格挡动画模拟
+auto-team: true           # 自动队伍防名称冲突
+
+# 实体渲染
+bossbar-patch: true       # Boss血条兼容模式
+use-new-effect-indicator: true  # 1.9+药效图标显示
+
+# 性能优化
+nms-player-ticking: true  # NMS玩家状态检测（影响反作弊）
+```
+
+[完整配置参考文档](https://viaversion.atlassian.net/wiki/spaces/VIAVERSION/pages/54100070/Configuration)
+```
